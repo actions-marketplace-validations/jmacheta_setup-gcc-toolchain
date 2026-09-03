@@ -27,10 +27,26 @@ inputs:
       newest available version.
     required: false
     default: "latest"
-  enable-cache:
-    description: Cache the downloaded toolchain archive to speed up subsequent runs
+  cache-strategy:
+    description: >
+      Which cache(s) to use: "remote" (actions/cache, default) — works on any runner,
+      including ephemeral GitHub-hosted ones; "local" (a directory on the runner's
+      disk, requires local-cache-location) — only useful on a persistent self-hosted
+      runner, but avoids network round-trips and actions/cache quota entirely; "both"
+      — e.g. for a matrix mixing persistent self-hosted and ephemeral hosted runners,
+      where local cache helps the former and remote cache is the only option for the
+      latter; or "none" to always download fresh.
     required: false
-    default: "true"
+    default: "remote"
+  local-cache-location:
+    description: >
+      Directory used to store/reuse downloaded toolchain archives when cache-strategy
+      is "local" or "both". Left empty (the default), falls back to the
+      SETUP_GCC_TOOLCHAIN_LOCAL_CACHE_LOCATION environment variable — so a
+      self-hosted runner can set its cache path once instead of every workflow
+      repeating it. An error if neither is set.
+    required: false
+    default: ""
   set-ld-library-path:
     description: >
       Prepend the toolchain's lib/lib64 directory to LD_LIBRARY_PATH so binaries

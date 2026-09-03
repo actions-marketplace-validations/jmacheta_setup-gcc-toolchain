@@ -14,7 +14,7 @@ A GitHub Action that downloads, verifies, and adds a GCC cross-compilation toolc
 ## Usage
 
 ```yaml
-- uses: jmacheta/setup-gcc-toolchain@v1
+- uses: jmacheta/setup-gcc-toolchain@v2
   with:
     toolchain: arm-none-eabi
     version: "15.2.1-1.1"
@@ -29,20 +29,32 @@ The toolchain is prepended to `PATH`, so it takes priority over any pre-installe
 | `toolchain` | yes | — | Toolchain name (see [Supported toolchains](#supported-toolchains)) |
 | `vendor` | no | — | Vendor name, e.g. `xpack` or `arm`. Required when a toolchain name is offered by multiple vendors and the requested version is ambiguous. |
 | `version` | no | `latest` | Version string, or `latest` for the newest available |
-| `enable-cache` | no | `true` | Cache the downloaded archive with `actions/cache` |
-| `set-ld-library-path` | no | `true` | Prepend the toolchain's `lib64`/`lib` directory to `LD_LIBRARY_PATH`, so binaries built with it use its bundled `libstdc++`/`libgcc` at runtime instead of an older system one. Fixes `GLIBCXX_x.y.z not found` errors when a native GCC toolchain (e.g. `x86_64-gcc`) is newer than the runner's system libstdc++. Set to `false` to leave `LD_LIBRARY_PATH` untouched. No-op on toolchains without a `lib64`/`lib` directory (e.g. Windows). |
+| `cache-strategy` | no | `remote` | How to cache the toolchain: `remote`, `local`, `both`, or `none` — see [Caching](#caching) |
+| `local-cache-location` | no\* | — (or env var, see [Caching](#caching)) | Directory for the local archive cache. \*Required when `cache-strategy` is `local` or `both` |
+| `set-ld-library-path` | no | `true` | Prepend the toolchain's `lib64`/`lib` to `LD_LIBRARY_PATH`, so built binaries use its bundled `libstdc++`/`libgcc` |
 
 ### Vendor selection
 
 Some toolchain names are provided by more than one vendor (e.g. `arm-none-eabi` is available from both `arm` and `xpack`). Without specifying `vendor`, the action picks the first match and raises an error if the requested version exists in multiple vendors. Use the `vendor` input to be explicit:
 
 ```yaml
-- uses: jmacheta/setup-gcc-toolchain@v1
+- uses: jmacheta/setup-gcc-toolchain@v2
   with:
     toolchain: arm-none-eabi
     vendor: xpack          # xPack release
     version: "15.2.1-1.1"
 ```
+
+### Caching
+
+`cache-strategy` controls how the toolchain is cached across runs:
+
+- **`remote`** (default) — caches the extracted toolchain with `actions/cache`. Works on any runner, including ephemeral GitHub-hosted ones.
+- **`local`** — reuses downloaded archives from a directory on the runner's disk instead of re-downloading. Only useful on a persistent self-hosted runner, but skips the network round-trip and `actions/cache` quota entirely. Requires `local-cache-location` (directly, or via `SETUP_GCC_TOOLCHAIN_LOCAL_CACHE_LOCATION`); the checksum from the toolchain database is always re-verified against the on-disk archive, and a mismatch falls back to a fresh download.
+- **`both`** — e.g. for a matrix mixing persistent self-hosted and ephemeral hosted runners, where the local cache helps the former and the remote cache is the only option for the latter.
+- **`none`** — always download fresh.
+
+`local-cache-location` sets the directory for the local archive cache, and falls back to the `SETUP_GCC_TOOLCHAIN_LOCAL_CACHE_LOCATION` env var if omitted — so a self-hosted runner can set its cache path once instead of every workflow repeating it. Safe for concurrent runners sharing the same local disk (atomic rename); not guaranteed on a network filesystem (e.g. NFS).
 
 ## Outputs
 
@@ -83,7 +95,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: jmacheta/setup-gcc-toolchain@v1
+      - uses: jmacheta/setup-gcc-toolchain@v2
         with:
           toolchain: arm-none-eabi
           version: "15.2.1-1.1"
@@ -97,10 +109,10 @@ jobs:
 `version` defaults to `latest`, so it can be omitted entirely:
 
 ```yaml
-- uses: jmacheta/setup-gcc-toolchain@v1
+- uses: jmacheta/setup-gcc-toolchain@v2
   with:
     toolchain: riscv-none-elf
-    enable-cache: false
+    cache-strategy: none
 ```
 
 ### ESP32 on Linux ARM64 runner
@@ -112,7 +124,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: jmacheta/setup-gcc-toolchain@v1
+      - uses: jmacheta/setup-gcc-toolchain@v2
         with:
           toolchain: xtensa-esp-elf
           version: "16.1.0_20260609"
@@ -129,7 +141,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: jmacheta/setup-gcc-toolchain@v1
+      - uses: jmacheta/setup-gcc-toolchain@v2
         with:
           toolchain: x86_64-w64-mingw32-ucrt
           version: "16.1.0"
@@ -142,7 +154,7 @@ jobs:
 When a toolchain is provided by more than one vendor, use the `vendor` input:
 
 ```yaml
-- uses: jmacheta/setup-gcc-toolchain@v1
+- uses: jmacheta/setup-gcc-toolchain@v2
   with:
     toolchain: arm-none-eabi
     vendor: arm              # official ARM Ltd release
@@ -164,7 +176,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: jmacheta/setup-gcc-toolchain@v1
+      - uses: jmacheta/setup-gcc-toolchain@v2
         with:
           toolchain: ${{ matrix.toolchain.name }}
           version: ${{ matrix.toolchain.version }}
