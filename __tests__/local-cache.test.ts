@@ -253,6 +253,42 @@ describe("installToolchain (remote cache)", () => {
     }
   });
 
+  it("skips download entirely when installDir is already populated", async () => {
+    fs.writeFileSync(path.join(installDir, "gcc"), "already installed");
+    const entry: ToolchainEntry = { url: "https://example.com/dist/toolchain-1.0.0.tar.gz", sha256: "irrelevant" };
+
+    const cacheHit = await installToolchain(entry, installDir, "cache-key", true, false, undefined);
+
+    expect(cacheHit).toBe(true);
+    expect(restoreCacheMock).not.toHaveBeenCalled();
+    expect(downloadToolMock).not.toHaveBeenCalled();
+  });
+
+  it("discards its own copy when another run installs to the same installDir concurrently", async () => {
+    const downloadedPath = path.join(fs.mkdtempSync(path.join(os.tmpdir(), "download-")), "toolchain-1.0.0.tar.gz");
+    fs.writeFileSync(downloadedPath, "genuine archive contents");
+    const entry: ToolchainEntry = {
+      url: "https://example.com/dist/toolchain-1.0.0.tar.gz",
+      sha256: crypto.createHash("sha256").update("genuine archive contents").digest("hex"),
+    };
+    downloadToolMock.mockResolvedValue(downloadedPath);
+    // simulates a concurrent run finishing its own extract-and-rename first, right as we
+    // finish ours
+    extractTarMock.mockImplementation(() => {
+      fs.mkdirSync(installDir, { recursive: true });
+      fs.writeFileSync(path.join(installDir, "gcc"), "installed by the concurrent run");
+      return Promise.resolve();
+    });
+
+    try {
+      await expect(installToolchain(entry, installDir, "cache-key", true, false, undefined)).resolves.toBe(false);
+      // the concurrent run's content must survive untouched, ours discarded
+      expect(fs.readdirSync(installDir)).toEqual(["gcc"]);
+    } finally {
+      fs.rmSync(path.dirname(downloadedPath), { recursive: true, force: true });
+    }
+  });
+
   it("never touches the remote cache when useRemoteCache is false", async () => {
     const downloadedPath = path.join(fs.mkdtempSync(path.join(os.tmpdir(), "download-")), "toolchain-1.0.0.tar.gz");
     fs.writeFileSync(downloadedPath, "genuine archive contents");

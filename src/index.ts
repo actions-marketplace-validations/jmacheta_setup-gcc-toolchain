@@ -331,6 +331,11 @@ export async function fetchArchive(
   return archivePath;
 }
 
+function isAlreadyInstalled(installDir: string): boolean {
+  // eslint-disable-next-line security/detect-non-literal-fs-filename -- installDir was checked by assertWithinDir() in run() before this is called
+  return fs.existsSync(installDir) && fs.readdirSync(installDir).length > 0;
+}
+
 /** Restores from remote cache, or downloads (via the local cache when enabled) and extracts into installDir. Returns whether a cache was hit. */
 export async function installToolchain(
   entry: ToolchainEntry,
@@ -340,6 +345,11 @@ export async function installToolchain(
   useLocalCache: boolean,
   localCacheLocation: string | undefined
 ): Promise<boolean> {
+  if (isAlreadyInstalled(installDir)) {
+    core.info(`✅ Already installed at ${installDir}, skipping download.`);
+    return true;
+  }
+
   if (useRemoteCache) {
     const restoredKey = await cache.restoreCache([installDir], cacheKey);
     if (restoredKey !== undefined) {
@@ -351,21 +361,61 @@ export async function installToolchain(
   const archivePath = await fetchArchive(entry, useLocalCache, localCacheLocation);
   const archiveName = path.basename(entry.url);
 
-  core.info(`📂 Extracting to ${installDir}...`);
-  // eslint-disable-next-line security/detect-non-literal-fs-filename -- installDir was just checked by assertWithinDir() above
-  fs.mkdirSync(installDir, { recursive: true });
-
+  // Extract into a private, pid-suffixed temp dir and move it into place with a single
+  // atomic rename — the same temp-file + rename pattern saveToLocalCache uses above, applied
+  // to the whole install directory. This is what makes two concurrent invocations of this
+  // action for the same toolchain/version (e.g. parallel jobs on a shared self-hosted runner)
+  // safe: each extracts to its own tempInstallDir, so neither ever observes the other's
+  // partially-written files, and rename() is atomic so exactly one of them ends up at
+  // installDir. The loser's rename fails because installDir already exists non-empty; it
+  // just discards its own (redundant but harmless) copy.
+  const tempInstallDir = `${installDir}.${process.pid}.tmp`;
   core.startGroup(`Extracting ${archiveName}`);
-  if (archiveName.endsWith(".zip")) {
-    await tc.extractZip(archivePath, installDir);
-  } else {
-    await tc.extractTar(archivePath, installDir, tarFlags(archiveName));
+  try {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename -- tempInstallDir is derived from the already-validated installDir
+    fs.mkdirSync(tempInstallDir, { recursive: true });
+    if (archiveName.endsWith(".zip")) {
+      await tc.extractZip(archivePath, tempInstallDir);
+    } else {
+      await tc.extractTar(archivePath, tempInstallDir, tarFlags(archiveName));
+    }
+  } finally {
+    core.endGroup();
   }
-  core.endGroup();
+
+  try {
+    // installDir must not already exist for the rename below to behave identically on POSIX
+    // and Windows (POSIX allows renaming onto an empty dir; Windows rejects it outright even
+    // when empty). It can only be empty here (isAlreadyInstalled already ruled out non-empty),
+    // so removing it first is safe — unless a concurrent run just populated it, in which case
+    // this throws ENOTEMPTY and falls into the concurrent-install handling below.
+    // eslint-disable-next-line security/detect-non-literal-fs-filename -- installDir was checked by assertWithinDir() in run() before this is called
+    if (fs.existsSync(installDir)) fs.rmdirSync(installDir);
+    // eslint-disable-next-line security/detect-non-literal-fs-filename -- both paths are derived from the already-validated installDir
+    fs.renameSync(tempInstallDir, installDir);
+    core.info(`📂 Installed to ${installDir}`);
+  } catch (err) {
+    if (!isAlreadyInstalled(installDir)) throw err;
+    core.info(`✅ ${installDir} was installed concurrently by another run, discarding our own copy.`);
+    // eslint-disable-next-line security/detect-non-literal-fs-filename -- tempInstallDir is derived from the already-validated installDir
+    fs.rmSync(tempInstallDir, { recursive: true, force: true });
+  }
 
   if (useRemoteCache) {
     core.info("☁️ Saving to remote cache...");
-    await cache.saveCache([installDir], cacheKey);
+    try {
+      await cache.saveCache([installDir], cacheKey);
+    } catch (err) {
+      // Non-fatal: the cache key may already be reserved by another run with the same
+      // toolchain/version/platform (e.g. this action invoked twice in one job, or two
+      // concurrent jobs on the same self-hosted runner) — the install itself already
+      // succeeded, so don't fail the step over an optimization.
+      core.warning(
+        `Could not save to remote cache (continuing without it): ${
+          err instanceof Error ? err.message : String(err)
+        }`
+      );
+    }
   }
   return false;
 }
