@@ -183,10 +183,22 @@ describe("resolveToolchain", () => {
     ).toThrow(/Available versions:/);
   });
 
-  it("xtensa-esp-elf not available on windows-x64", () => {
-    expect(() =>
-      resolveToolchain(REPO_ROOT, "xtensa-esp-elf", "latest", "windows-x64")
-    ).toThrow(/not found/);
+  it("resolves xtensa-esp-elf (espressif) on windows-x64", () => {
+    const entry = resolveToolchain(REPO_ROOT, "xtensa-esp-elf", "latest", "windows-x64");
+    expect(entry.url).toContain("x86_64-w64-mingw32");
+    expect(entry.sha256).toHaveLength(64);
+  });
+
+  it("resolves riscv32-esp-elf (espressif) on windows-x64", () => {
+    const entry = resolveToolchain(REPO_ROOT, "riscv32-esp-elf", "latest", "windows-x64");
+    expect(entry.url).toContain("x86_64-w64-mingw32");
+    expect(entry.sha256).toHaveLength(64);
+  });
+
+  it("resolves xpack x86_64-w64-mingw32-gcc on windows-x64", () => {
+    const entry = resolveToolchain(REPO_ROOT, "x86_64-w64-mingw32-gcc", "15.2.0-2", "windows-x64", "xpack");
+    expect(entry.url).toContain("win32-x64");
+    expect(entry.sha256).toHaveLength(64);
   });
 });
 
