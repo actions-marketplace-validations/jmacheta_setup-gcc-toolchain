@@ -272,6 +272,52 @@ xpack:
         url: https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack/releases/download/v11.3.0-1/xpack-riscv-none-elf-gcc-11.3.0-1-win32-x64.zip
         sha256: 56cc2e340bdcaa718862b3526a7c550605e699847a8903e471336ba0a4535c68
 
+  x86_64-w64-mingw32-gcc:
+    description: MinGW-w64 x86_64 cross GCC, UCRT runtime
+    versions:
+      "15.2.0-2":
+        url: https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack/releases/download/v15.2.0-2/xpack-mingw-w64-gcc-15.2.0-2-win32-x64.zip
+        sha256: 0e541c0df2569b2593a39143b0512a1663827d0b9ee52b5f8c73dc67d03774c2
+      "15.2.0-1":
+        url: https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack/releases/download/v15.2.0-1/xpack-mingw-w64-gcc-15.2.0-1-win32-x64.zip
+        sha256: b8c86be12d8e7e121dc2501714b06dc58f7da954696e3caaf835b5b0e3eb00c6
+      "14.3.0-1":
+        url: https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack/releases/download/v14.3.0-1/xpack-mingw-w64-gcc-14.3.0-1-win32-x64.zip
+        sha256: e145e33f3c2cd09df75c1656f2bf5e537cccdd66971fac944e2ab8627795d1ea
+      "14.2.0-1":
+        url: https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack/releases/download/v14.2.0-1/xpack-mingw-w64-gcc-14.2.0-1-win32-x64.zip
+        sha256: d9f73bb51ada5ae0ac49277c91815ee0334c8096614d6ced1828fd864712ce73
+      "14.1.0-1":
+        url: https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack/releases/download/v14.1.0-1/xpack-mingw-w64-gcc-14.1.0-1-win32-x64.zip
+        sha256: 39fe0703c38ffd126368ce670965015ae01f5b2d6594a259d5f0b608071186d9
+      "13.4.0-1":
+        url: https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack/releases/download/v13.4.0-1/xpack-mingw-w64-gcc-13.4.0-1-win32-x64.zip
+        sha256: a28fa69f4c2ed494f1beed479eed885fa8a1e5ff472f64f761f1c3402bb08be8
+      "13.3.0-1":
+        url: https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack/releases/download/v13.3.0-1/xpack-mingw-w64-gcc-13.3.0-1-win32-x64.zip
+        sha256: 472df36af812441015e6ebd3277659ac62be8a1d4396d1363dfeef806046f9ec
+      "13.2.0-1":
+        url: https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack/releases/download/v13.2.0-1/xpack-mingw-w64-gcc-13.2.0-1-win32-x64.zip
+        sha256: 59651e3ccbbd3d7520cb1b72059f15f1f72d73ac4c31289cebd59d44cb9c7d07
+      "12.5.0-1":
+        url: https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack/releases/download/v12.5.0-1/xpack-mingw-w64-gcc-12.5.0-1-win32-x64.zip
+        sha256: a93b34b49933f2fcb9aae01f44283a098c3d881cd308fc168e7c416344bb12b4
+      "12.4.0-1":
+        url: https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack/releases/download/v12.4.0-1/xpack-mingw-w64-gcc-12.4.0-1-win32-x64.zip
+        sha256: 3b309011989ad4af4ac2ebd195ad6a516652db2bd71c2683e9acbf2bbb4890dd
+      "12.3.0-1":
+        url: https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack/releases/download/v12.3.0-1/xpack-mingw-w64-gcc-12.3.0-1-win32-x64.zip
+        sha256: 49b0d988c0d6a67a99cdf38fe942ff4fa1eab1aef4160cd47f4d6ad32777e0bc
+      "12.2.0-1":
+        url: https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack/releases/download/v12.2.0-1/xpack-mingw-w64-gcc-12.2.0-1-win32-x64.zip
+        sha256: 43ca4e249941d335047a874ba3ff7d610912b004d805417b6340f4ed26132567
+      "11.5.0-1":
+        url: https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack/releases/download/v11.5.0-1/xpack-mingw-w64-gcc-11.5.0-1-win32-x64.zip
+        sha256: 74df35aa1c68ac73549817cb5dc6e0add312a374f509aac1ecafb3feaaab87c7
+      "11.3.0-1":
+        url: https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack/releases/download/v11.3.0-1/xpack-mingw-w64-gcc-11.3.0-1-win32-x64.zip
+        sha256: 2ff8e6d82a6de1a260403f6cc93bff9a5b99c036edbbc20839f913fc6c51a815
+
   x86_64-gcc:
     description: Native x86_64 GCC
     versions:
@@ -353,6 +399,142 @@ xpack:
       "8.5.0-1":
         url: https://github.com/xpack-dev-tools/gcc-xpack/releases/download/v8.5.0-1/xpack-gcc-8.5.0-1-win32-x64.zip
         sha256: 71c9a4744b207e080b7ab94e777b8a8f90018cccf1896fa650cbee2d91ac779c
+
+espressif:
+
+  xtensa-esp-elf:
+    description: Xtensa bare-metal for ESP32/ESP32-S2/S3
+    versions:
+      "16.1.0_20260609":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-16.1.0_20260609/xtensa-esp-elf-16.1.0_20260609-x86_64-w64-mingw32.zip
+        sha256: cb59cbfe7f8ce35700dc407e4ce17af95576cc11285e024caea8a2bd6e590da9
+      "15.2.0_20251204":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-15.2.0_20251204/xtensa-esp-elf-15.2.0_20251204-x86_64-w64-mingw32.zip
+        sha256: efa1e337b5f64239674bf755b767969cbba7f4e66fe7c6ab8d19b650f56012a9
+      "15.2.0_20251201":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-15.2.0_20251201/xtensa-esp-elf-15.2.0_20251201-x86_64-w64-mingw32.zip
+        sha256: 963667e4d8f79010d8b443741bbe89633bcdbbe478dc68f18df9fc68561404da
+      "15.2.0_20251127":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-15.2.0_20251127/xtensa-esp-elf-15.2.0_20251127-x86_64-w64-mingw32.zip
+        sha256: 04d01e5b2113e0793e5ce843d31dec5755e9018c8b53c12cfd087ae551933fae
+      "15.2.0_20250929":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-15.2.0_20250929/xtensa-esp-elf-15.2.0_20250929-x86_64-w64-mingw32.zip
+        sha256: e352f10b641b537384df6c20a128316f27895f90d0b417f7313e58d1418e0768
+      "15.2.0_20250920":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-15.2.0_20250920/xtensa-esp-elf-15.2.0_20250920-x86_64-w64-mingw32.zip
+        sha256: 48c05de9882a2f14233667d718eb8567a3ba9e83d05b5e76ab46b80ac95f8bfc
+      "15.1.0_20250607":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-15.1.0_20250607/xtensa-esp-elf-15.1.0_20250607-x86_64-w64-mingw32.zip
+        sha256: 2c307163a2bb366acc9c5c637035dc1f6bbd03f8c4407cff40cd9a4e016b14d0
+      "14.2.0_20260121":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/xtensa-esp-elf-14.2.0_20260121-x86_64-w64-mingw32.zip
+        sha256: 82cbe0353c2e7c96acc8755c854aaa2d93d346c6a378fc692e60b3912c560108
+      "14.2.0_20251219":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20251219/xtensa-esp-elf-14.2.0_20251219-x86_64-w64-mingw32.zip
+        sha256: 382ec0a7053cfb63d6cbf56089046ea919ddd77107292cb7bb1f23d7b0859586
+      "14.2.0_20251208":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20251208/xtensa-esp-elf-14.2.0_20251208-x86_64-w64-mingw32.zip
+        sha256: 9295d0d2f847c1424d81c88f0b4064bbc72224bf7b93a50d12893a99e13b154f
+      "14.2.0_20251107":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20251107/xtensa-esp-elf-14.2.0_20251107-x86_64-w64-mingw32.zip
+        sha256: b0de5062da2f05d1773d1537421134e2a7517bd74a06c3b5763b07f94e38bece
+      "14.2.0_20251103":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20251103/xtensa-esp-elf-14.2.0_20251103-x86_64-w64-mingw32.zip
+        sha256: 3f7bbfa8b79926991f99c58a5a5c2da74d25b65bee0f8bd4757af349df192183
+      "14.2.0_20251024":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20251024/xtensa-esp-elf-14.2.0_20251024-x86_64-w64-mingw32.zip
+        sha256: 7e3ba9aa6628af100498a10e8470876e623e29e90166e564fe6ff27cc0cea09d
+      "14.2.0_20250730":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20250730/xtensa-esp-elf-14.2.0_20250730-x86_64-w64-mingw32.zip
+        sha256: 9ce39218884cfbf428f9f6b1cb6afd9341e327f5e1a8d1d0369c21ae6e3b0828
+      "14.2.0_20241119":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/xtensa-esp-elf-14.2.0_20241119-x86_64-w64-mingw32.zip
+        sha256: 62ae704777d73c30689efff6e81178632a1ca44d1a2d60f4621eb997e040e028
+      "14.2.0_20240906":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20240906/xtensa-esp-elf-14.2.0_20240906-x86_64-w64-mingw32.zip
+        sha256: 5691206046de955bd503f320afadc40105bdb457bb7898ca1230365ac7084a00
+      "13.2.0_20260203":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-13.2.0_20260203/xtensa-esp-elf-13.2.0_20260203-x86_64-w64-mingw32.zip
+        sha256: 9bf3e950d72e18f648b8a4d1d49427750715bd47c0dc261f715179a7aaa53330
+      "13.2.0_20250707":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-13.2.0_20250707/xtensa-esp-elf-13.2.0_20250707-x86_64-w64-mingw32.zip
+        sha256: e0eae3964d603d15fca309d2c02af40c25429ced443460b9cb07980b261e5069
+      "13.2.0_20240530":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-13.2.0_20240530/xtensa-esp-elf-13.2.0_20240530-x86_64-w64-mingw32.zip
+        sha256: fad96cffef900b4898bc89d5a11c16c581bddb88f25fc83eccbbc126cd9a4f41
+      "13.2.0_20240305":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-13.2.0_20240305/xtensa-esp-elf-13.2.0_20240305-x86_64-w64-mingw32.zip
+        sha256: a80879c35b7f82ce80332ef0b68b0c7d245bafd9c98a35c45965850f40faf5ba
+      "13.2.0_20230928":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-13.2.0_20230928/xtensa-esp-elf-13.2.0_20230928-x86_64-w64-mingw32.zip
+        sha256: 80e3271b7c9b64694ba8494b90054da2efce328f7d4e5f5f625d08808372fa64
+
+  riscv32-esp-elf:
+    description: RISC-V bare-metal for ESP32-C/H series
+    versions:
+      "16.1.0_20260609":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-16.1.0_20260609/riscv32-esp-elf-16.1.0_20260609-x86_64-w64-mingw32.zip
+        sha256: 70acfe653e6245b4afc3f2d22863445d2a999f0987f3e79b1814b26118284770
+      "15.2.0_20251204":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-15.2.0_20251204/riscv32-esp-elf-15.2.0_20251204-x86_64-w64-mingw32.zip
+        sha256: c61488aa15f49146aae918267110f775a52c3cef3844cbf261f475ef97523c3d
+      "15.2.0_20251201":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-15.2.0_20251201/riscv32-esp-elf-15.2.0_20251201-x86_64-w64-mingw32.zip
+        sha256: 20eac8ca3e8496f9f8b3942202571c8ee1203e0a4516858b68f8cdcab0e72076
+      "15.2.0_20251127":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-15.2.0_20251127/riscv32-esp-elf-15.2.0_20251127-x86_64-w64-mingw32.zip
+        sha256: 31067e8afe342850227d6d7da407f0db61e5d584e0b724fec7dbddc298f97850
+      "15.2.0_20250929":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-15.2.0_20250929/riscv32-esp-elf-15.2.0_20250929-x86_64-w64-mingw32.zip
+        sha256: b30e667cbcddbe08415a049489380b0a484e5ed243d0f1f4dbb6891b5e5e2252
+      "15.2.0_20250920":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-15.2.0_20250920/riscv32-esp-elf-15.2.0_20250920-x86_64-w64-mingw32.zip
+        sha256: 8ecd7a4503274f38cc6055793005d7d418aef9a6d99b237b3cd37612370d0876
+      "15.1.0_20250607":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-15.1.0_20250607/riscv32-esp-elf-15.1.0_20250607-x86_64-w64-mingw32.zip
+        sha256: cc6df1e6f828487321fabd3c612097115e14937cb30eaab245f5fe931b481864
+      "14.2.0_20260121":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/riscv32-esp-elf-14.2.0_20260121-x86_64-w64-mingw32.zip
+        sha256: c2734714e59f684b74d1cb278f75b4ae9ec546aa1e55d73786ef039410e4a8f7
+      "14.2.0_20251219":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20251219/riscv32-esp-elf-14.2.0_20251219-x86_64-w64-mingw32.zip
+        sha256: 476f8a81bd4423bbbaacec727dfc8c53eeb2711b6e8a86e40e41a883b5be1e82
+      "14.2.0_20251208":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20251208/riscv32-esp-elf-14.2.0_20251208-x86_64-w64-mingw32.zip
+        sha256: 74d1d2a018eea6705fa34d6c5387729b85843cb829a58b287cc6074a92f7184f
+      "14.2.0_20251107":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20251107/riscv32-esp-elf-14.2.0_20251107-x86_64-w64-mingw32.zip
+        sha256: 373abecd1cdfd480b09b8659e319e636064f99fec46f635a05c5413e5f009c05
+      "14.2.0_20251103":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20251103/riscv32-esp-elf-14.2.0_20251103-x86_64-w64-mingw32.zip
+        sha256: 7a0e567f50e3f5689415d1f3a2f3c8de250df85c866d0e668a2c57f2e2651faa
+      "14.2.0_20251024":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20251024/riscv32-esp-elf-14.2.0_20251024-x86_64-w64-mingw32.zip
+        sha256: ce15bb0d95021c5c80589cd4f2e7718716b8dbe0c2afd59ced966eafbca61d3f
+      "14.2.0_20250730":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20250730/riscv32-esp-elf-14.2.0_20250730-x86_64-w64-mingw32.zip
+        sha256: a41e5219f0ff66cde3da3ac096b55d60fef4a1fb746590893c4c47f5437f192a
+      "14.2.0_20241119":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/riscv32-esp-elf-14.2.0_20241119-x86_64-w64-mingw32.zip
+        sha256: 24c8407fa467448d394e0639436a5ede31caf1838e35e8435e19df58ebed438c
+      "14.2.0_20240906":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20240906/riscv32-esp-elf-14.2.0_20240906-x86_64-w64-mingw32.zip
+        sha256: 3631a8a8a72b9860fd823674918d118c696f920849c783f673b86adceeeeea7a
+      "13.2.0_20260203":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-13.2.0_20260203/riscv32-esp-elf-13.2.0_20260203-x86_64-w64-mingw32.zip
+        sha256: 1e8d1aaa1159cea567b61acdd8d34de8ad5309d844a9519c2faea1d870132bb2
+      "13.2.0_20250707":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-13.2.0_20250707/riscv32-esp-elf-13.2.0_20250707-x86_64-w64-mingw32.zip
+        sha256: 79a65a85be948c2d64972314d785f13f4984acca556166422dbc23814c591c3b
+      "13.2.0_20240530":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-13.2.0_20240530/riscv32-esp-elf-13.2.0_20240530-x86_64-w64-mingw32.zip
+        sha256: 413eb9f6adf8fdaf25544d014c850fc09eb38bb93a2fc5ebd107ab1b0de1bb3a
+      "13.2.0_20240305":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-13.2.0_20240305/riscv32-esp-elf-13.2.0_20240305-x86_64-w64-mingw32.zip
+        sha256: e1e63f1926b9c643bc1de72e30cc79fc2079ad169546669e55836efbcc559d11
+      "13.2.0_20230928":
+        url: https://github.com/espressif/crosstool-NG/releases/download/esp-13.2.0_20230928/riscv32-esp-elf-13.2.0_20230928-x86_64-w64-mingw32.zip
+        sha256: 1300a54505dc964fa9104482737152e669f4d880efc1d54057378d9e6910ae1e
 
 zakkemble:
 
